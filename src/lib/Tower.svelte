@@ -26,7 +26,9 @@
     }
 
     function handleDragEnter(event) {
-        console.log("You are dragging over the " + event.target.getAttribute("id"));
+        console.log(
+            "You are dragging over the " + event.target.getAttribute("id")
+        );
     }
 
     function handleDragLeave(event) {
@@ -101,9 +103,7 @@
             {#if lastElement}
                 <div
                     id="{item}"
-                    class="block"
-                    style="width: {width}px;"
-                    draggable="true"
+                    class="block topblock"
                     on:dragenter="{handleDragEnter}"
                     on:dragleave="{handleDragLeave}"
                     on:dragstart="{handleDragStart}"
@@ -111,11 +111,20 @@
                     on:drop="{handleDragDrop}"
                     on:dragover="{handleDragOver}"
                 >
-                    {item}
+                    <div
+                        draggable="true"
+                        id="{item}"
+                        class="innerblock"
+                        style="width: {width}px;"
+                    >
+                        {item}
+                    </div>
                 </div>
             {:else}
-                <div id="{item}" class="block" style="width: {width}px;">
-                    {item}
+                <div id="{item}" class="block">
+                    <div class="innerblock" style="width: {width}px;">
+                        {item}
+                    </div>
                 </div>
             {/if}
         {/each}
@@ -133,12 +142,25 @@
     .wrapper {
         position: relative;
     }
+    .topblock {
+        flex: 1;
+    }
     .block {
-        background-color: red;
+        display: flex;
+        flex-direction: column-reverse;
+        background-color: transparent;
+        width: 100%;
         height: 20px;
+        text-align: center;
         align-self: center;
+        color: white;
+    }
+    .innerblock {
         border: 1px solid black;
         border-bottom: none;
+        height: 20px;
+        align-self: center;
+        background-color: red;
         color: white;
     }
     .emptyblock {
