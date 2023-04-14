@@ -1,8 +1,9 @@
 class Stack {
 
     // Array is used to implement stack 
-    constructor(items = []) {
+    constructor(name, items = []) {
         this.items = items;
+        this.name = name
     }
     // push function 
     push(element) {
@@ -13,7 +14,8 @@ class Stack {
     pop() {
         if (this.items.length == 0)
             return "Underflow";
-        return this.items.pop();
+        let pop = this.items.pop()
+        return pop;
     }
 
     // isEmpty function 
