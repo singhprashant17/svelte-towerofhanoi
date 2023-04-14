@@ -74,6 +74,7 @@
     }
 
     function handleDragOver(e) {
+        // enable drop on the dragged over element
         e.preventDefault();
         var getAttributeId = e.target.getAttribute("id");
         var getDataText = e.dataTransfer.getData("text");

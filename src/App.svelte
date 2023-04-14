@@ -3,9 +3,15 @@
   import Stack from "./lib/Stack";
   import Tower from "./lib/Tower.svelte";
 
+  var count: number = 3;
+  $: count, resetState();
+
+  var numberOfMoves: number;
+
   let tower1: Stack;
   let tower2: Stack;
   let tower3: Stack;
+
   resetState();
 
   function handleUpdateTower(event) {
@@ -22,6 +28,14 @@
     // pop element from dragged tower
     incomingTower.pop();
     updateTowerReference(incomingTower);
+
+    numberOfMoves = numberOfMoves + 1;
+
+    if (tower1.isEmpty() && tower2.isEmpty()) {
+      setTimeout(() => {
+        alert("Game over");
+      }, 100);
+    }
   }
 
   function updateTowerReference(tower: Stack) {
@@ -54,12 +68,28 @@
   }
 
   function resetState() {
-    tower1 = new Stack("tower1", [6, 5, 4, 3, 2, 1]);
+    numberOfMoves = 0;
+    if (count <= 0) {
+      count = 1;
+    }
+    tower1 = new Stack(
+      "tower1",
+      Array(count)
+        .fill(0)
+        .map((value, index) => {
+          return index + 1;
+        })
+        .reverse()
+    );
     tower2 = new Stack("tower2");
     tower3 = new Stack("tower3");
   }
 </script>
 
+<p>Move all blocks to the last tower</p>
+<p>No. of moves = {numberOfMoves}</p>
+<br />
+<br />
 <main class="main">
   <Tower bind:stack="{tower1}" on:updateTower="{handleUpdateTower}" />
   <Tower bind:stack="{tower2}" on:updateTower="{handleUpdateTower}" />
@@ -67,7 +97,7 @@
 </main>
 <br />
 <br />
-<ControlButtons on:reset="{resetState}" />
+<ControlButtons on:reset="{resetState}" bind:count="{count}" />
 
 <style>
   .main {
