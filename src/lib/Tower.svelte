@@ -11,11 +11,15 @@
         return isLastElement;
     }
 
+    // start drag on the current tower
     function handleDragStart(e) {
         let status = "Dragging the element " + e.target.getAttribute("id");
         console.log(status);
         e.dataTransfer.dropEffect = "move";
+        // save data in the transfer object
+        // id of the dragged block
         e.dataTransfer.setData("text", e.target.getAttribute("id"));
+        // current stack name
         e.dataTransfer.setData("towerName", stack.name);
     }
 
@@ -35,14 +39,15 @@
         console.log("You left the " + event.target.getAttribute("id"));
     }
 
+    // block is dragged into the current tower
     function handleDragDrop(e) {
-        var element_id = e.dataTransfer.getData("text");
-        let status = "You droped " + element_id + " into drop zone";
-        var getAttributeId = e.target.getAttribute("id");
+        // get the id of the dragged block from the data transfer object
+        let incomingValue = e.dataTransfer.getData("text");
+        // get id of the block on which drag dropped
+        let currentValue = e.target.getAttribute("id");
+        let status = "You droped " + incomingValue + " into drop zone";
 
-        let incomingValue = element_id;
-        let currentValue = getAttributeId;
-
+        // check if block can be dropped
         if (incomingValue < currentValue) {
             console.log("can drop");
         } else {
@@ -50,10 +55,10 @@
             return;
         }
 
+        // get dragged blocks tower name from data transfer object 
         let incomungTowerName = e.dataTransfer.getData("towerName");
+        // get current tower name
         let currentTowerName = stack.name;
-
-        console.log(status, getAttributeId);
 
         console.log(
             "incomungTowerName =" + incomungTowerName,

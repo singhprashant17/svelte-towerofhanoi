@@ -13,14 +13,16 @@
     let incomingValue = Number(payload["incomingValue"]);
     let incomingTower: Stack = getTowerWithName(payload["incomingTowerName"]);
 
+    // push incoming value to current tower
     currentTower.push(incomingValue);
-    hydrateTower(currentTower);
+    updateTowerReference(currentTower);
 
+    // pop element from dragged tower
     incomingTower.pop();
-    hydrateTower(incomingTower);
+    updateTowerReference(incomingTower);
   }
 
-  function hydrateTower(tower: Stack) {
+  function updateTowerReference(tower: Stack) {
     switch (tower.name) {
       case "tower1":
         tower1 = tower;
