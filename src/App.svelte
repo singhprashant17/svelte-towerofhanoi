@@ -1,10 +1,12 @@
 <script lang="ts">
+  import ControlButtons from "./lib/ControlButtons.svelte";
   import Stack from "./lib/Stack";
   import Tower from "./lib/Tower.svelte";
 
-  let tower1 = new Stack("tower1", [6 ,5, 4, 3, 2, 1]);
-  let tower2 = new Stack("tower2");
-  let tower3 = new Stack("tower3");
+  let tower1: Stack;
+  let tower2: Stack;
+  let tower3: Stack;
+  resetState();
 
   function handleUpdateTower(event) {
     let payload = event.detail;
@@ -50,6 +52,12 @@
         break;
     }
   }
+
+  function resetState() {
+    tower1 = new Stack("tower1", [6, 5, 4, 3, 2, 1]);
+    tower2 = new Stack("tower2");
+    tower3 = new Stack("tower3");
+  }
 </script>
 
 <main class="main">
@@ -57,6 +65,9 @@
   <Tower bind:stack="{tower2}" on:updateTower="{handleUpdateTower}" />
   <Tower bind:stack="{tower3}" on:updateTower="{handleUpdateTower}" />
 </main>
+<br />
+<br />
+<ControlButtons on:reset="{resetState}" />
 
 <style>
   .main {
