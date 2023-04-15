@@ -70,7 +70,7 @@
   function resetState() {
     numberOfMoves = 0;
     if (count <= 0) {
-      count = 1;
+      return
     }
     tower1 = new Stack(
       "tower1",
@@ -86,7 +86,7 @@
   }
 </script>
 
-<p>Move all blocks to the last tower</p>
+<h2>Move all blocks to the last tower</h2>
 <p>No. of moves = {numberOfMoves}</p>
 <br />
 <br />
